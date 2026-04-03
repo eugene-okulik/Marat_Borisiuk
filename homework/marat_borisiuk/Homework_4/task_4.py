@@ -12,7 +12,7 @@ my_dict['set'] = sset
 print(my_dict['tuple'][-1])
 my_dict['list'].append(123)
 my_dict['list'].pop(1)
-my_dict["dict"]['i am a tuple'] = ('q', 'w', 'e', 'r', 't')
+my_dict["dict"][("i am a tuple",)] = ("q",)
 my_dict['dict'].pop('name1')
 my_dict['set'].add('123')
 my_dict['set'].remove(38)
