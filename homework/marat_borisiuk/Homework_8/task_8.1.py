@@ -4,7 +4,7 @@ import random
 bonus = random.choice([True, False])
 salary = int(input("Enter salary: "))
 
-if bonus == True:
+if bonus:
     bonus_amount = random.randint(1, 100000)
     salary_result = salary + bonus_amount
 else:

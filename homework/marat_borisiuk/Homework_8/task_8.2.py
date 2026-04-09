@@ -4,6 +4,7 @@ def fibonacci():
         yield a
         a, b = b, a + b
 
+
 fib = fibonacci()
 positions = [5, 200, 1000, 100000]
 current = 0
