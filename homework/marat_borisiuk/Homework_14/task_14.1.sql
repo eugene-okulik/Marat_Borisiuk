@@ -1,4 +1,4 @@
-INSERT INTO students (name, second_name, group_id) VALUES ('John', 'Jin', 1);
+INSERT INTO students (name, second_name, group_id) VALUES ('John', 'Jin', NULL);
 
 INSERT INTO books (title, taken_by_student_id)
 VALUES ('Первая', 22850), ('Вторая', 22850), ('Синяя', 22850);
