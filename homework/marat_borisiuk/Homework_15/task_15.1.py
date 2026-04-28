@@ -28,41 +28,32 @@ my_group_id = cursor.lastrowid
 
 cursor.execute("UPDATE students SET group_id = %s WHERE id = %s", (my_group_id, my_student_id))
 
-insert_query = "INSERT INTO subjects (title) VALUES (%s)"
-values = [
-    ('Алгебра112',),
-    ('Геометрия112',),
-    ('Физика112',)
-]
-cursor.executemany(insert_query, values)
+subject_ids = []
+subjects = ['Алгебра112', 'Геометрия112', 'Физика112']
 
-cursor.execute("SELECT id FROM subjects WHERE title IN ('Алгебра112', 'Геометрия112', 'Физика112')")
-subject_ids = cursor.fetchall()
+for title in subjects:
+    cursor.execute("INSERT INTO subjects (title) VALUES (%s)", (title,))
+    subject_ids.append(cursor.lastrowid)
 
 insert_query = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s)"
+lesson_ids = []
+
+for subject_id in subject_ids:
+    cursor.execute(insert_query, ('lesson1_My_group_112', subject_id))
+    lesson_ids.append(cursor.lastrowid)
+
+    cursor.execute(insert_query, ('lesson2_My_group_112', subject_id))
+    lesson_ids.append(cursor.lastrowid)
+
+insert_query = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s)"
 values = []
 
-for subject in subject_ids:
-    subject_id = subject['id']
-    values.append(('lesson1_My_group_112', subject_id))
-    values.append(('lesson2_My_group_112', subject_id))
+stud_marks = [5, 4, 5, 4, 5, 4]
+
+for i, lesson_id in enumerate(lesson_ids):
+    values.append((stud_marks[i], lesson_id, my_student_id))
 
 cursor.executemany(insert_query, values)
-
-cursor.execute("""
-    SELECT l.id FROM lessons l
-    JOIN subjects s ON l.subject_id = s.id
-    WHERE s.title IN ('Алгебра112', 'Геометрия112', 'Физика112')
-""")
-lesson_ids = cursor.fetchall()
-
-cursor.execute("""
-    INSERT INTO marks (value, lesson_id, student_id)
-    SELECT 5, l.id, %s
-    FROM lessons l
-    JOIN subjects s ON l.subject_id = s.id
-    WHERE s.title IN ('Алгебра112', 'Геометрия112', 'Физика112')
-""", (my_student_id,))
 db.commit()
 
 cursor.execute("SELECT value FROM marks WHERE student_id = %s", (my_student_id,))
