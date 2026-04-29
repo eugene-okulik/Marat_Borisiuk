@@ -36,14 +36,13 @@ for title in subjects:
     subject_ids.append(cursor.lastrowid)
 
 insert_query = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s)"
+lesson_titles = ['lesson1_My_group_112', 'lesson2_My_group_112']
 lesson_ids = []
 
 for subject_id in subject_ids:
-    cursor.execute(insert_query, ('lesson1_My_group_112', subject_id))
-    lesson_ids.append(cursor.lastrowid)
-
-    cursor.execute(insert_query, ('lesson2_My_group_112', subject_id))
-    lesson_ids.append(cursor.lastrowid)
+    for title in lesson_titles:
+        cursor.execute(insert_query, (title, subject_id))
+        lesson_ids.append(cursor.lastrowid)
 
 insert_query = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s)"
 values = []
