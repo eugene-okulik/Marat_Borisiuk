@@ -20,7 +20,7 @@ def test_post_object(name):
 def test_get_object(new_object_id):
     with allure.step(f"Get object with id {new_object_id}"):
         response = requests.get(f"{BASE_URL}/{new_object_id}")
-    with allure.step(f"Check status cod is 200"):
+    with allure.step("Check status cod is 200"):
         assert response.status_code != 200, "Object not found"
     data = response.json()
     with allure.step(f"Check id is {new_object_id}"):
