@@ -53,7 +53,7 @@ def test_patch_object(patch_object_endpoint, created_object_id):
 
 
 @allure.feature("Delete object")
-def test_delete_object(delete_object_endpoint, created_object_id):
+def test_delete_object(delete_object_endpoint, get_object_endpoint, created_object_id):
     delete_object_endpoint.delete_object_by_id(created_object_id)
     delete_object_endpoint.check_status_code_correct(200)
-    delete_object_endpoint.check_object_is_deleted(created_object_id)
+    delete_object_endpoint.check_object_is_deleted(get_object_endpoint, created_object_id)

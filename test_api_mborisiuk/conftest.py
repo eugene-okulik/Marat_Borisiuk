@@ -32,10 +32,9 @@ def delete_object_endpoint():
 
 
 @pytest.fixture
-def created_object_id(create_object_endpoint):
+def created_object_id(create_object_endpoint, delete_object_endpoint):
     body = {"name": "Test object", "data": {"color": "white", "size": "big"}}
     create_object_endpoint.create_new_obj(body)
     obj_id = create_object_endpoint.json["id"]
     yield obj_id
-    import requests
-    requests.delete(f"{create_object_endpoint.url}/{obj_id}")
+    delete_object_endpoint.delete_object_by_id(obj_id)
